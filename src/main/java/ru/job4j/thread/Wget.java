@@ -31,7 +31,7 @@ public class Wget implements Runnable {
                     }
                 }
             }
-        } catch(IOException e) {
+        } catch (IOException e) {
             e.printStackTrace();
         }
     }
@@ -58,10 +58,11 @@ public class Wget implements Runnable {
     private static boolean checkArgs(String[] args) {
         boolean result = args.length >= 3;
         if (!result) {
-            System.out.println("Usage next format for coorect to run -->"
-                    + "\n Wget <url> <speed> <file name>, where:"
-                    + "\n <url>          - internet url;"
-                    + "\n <speed>        - download speed kBytes pes 1 second.");
+            System.out.println("""
+                    Usage next format for coorect to run -->
+                     Wget <url> <speed> <file name>, where:
+                     <url>          - internet url;
+                     <speed>        - download speed kBytes pes 1 second.""");
         }
         return result;
     }
