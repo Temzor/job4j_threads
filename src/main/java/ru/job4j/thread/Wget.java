@@ -46,7 +46,7 @@ public class Wget implements Runnable {
     }
 
     public static void validateArgs(String[] args) {
-        if (args.length < 3) {
+        if (args.length != 3) {
             throw new IllegalArgumentException("""
                     Invalid arguments, please correct parameters: \s
                      args[0] -> internet url
