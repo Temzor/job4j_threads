@@ -1,10 +1,7 @@
 package codewarssevenkyu;
 
-import java.util.stream.LongStream;
-
 public class Factorial {
     public static long factorial(int n) {
-        return LongStream.rangeClosed(1, n)
-                .reduce(1, (long x, long y) -> x * y);
+        return n <= 1 ? 1 : n * factorial(n - 1);
     }
 }
