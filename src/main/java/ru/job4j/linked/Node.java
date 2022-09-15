@@ -8,7 +8,7 @@ package ru.job4j.linked;
  4. Не отдавайте наружу поля ссылочного изменяемого типа (объекты классов, массивы) – если объект под ссылкой не иммутабельный, должна возвращаться его глубокая копия (defensive copy);
  */
 
-public class Node<T> {
+public final class Node<T> {
     private final Node<T> next;
     private final T value;
 
