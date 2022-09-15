@@ -3,83 +3,118 @@ package ru.job4j.tree.binary;
 import java.util.Stack;
 
 public class BinaryTree {
-    private Node rootNode; // корневой узел
+    /* Корневой узел */
+    private Node rootNode;
 
-    public BinaryTree() { // Пустое дерево
+    /* Пустое дерево */
+    public BinaryTree() {
         rootNode = null;
     }
 
-    public Node findNodeByValue(int value) { // поиск узла по значению
-        Node currentNode = rootNode; // начинаем поиск с корневого узла
-        while (currentNode.getValue() != value) { // поиск покуда не будет найден элемент или не будут перебраны все
-            if (value < currentNode.getValue()) { // движение влево?
+    /* Поиск узла по значению */
+    public Node findNodeByValue(int value) {
+        /* Начинаем поиск с корневого узла */
+        Node currentNode = rootNode;
+        /* Поиск покуда не будет найден элемент или не будут перебраны все */
+        while (currentNode.getValue() != value) {
+            /* Движение влево? */
+            if (value < currentNode.getValue()) {
                 currentNode = currentNode.getLeftChild();
-            } else { //движение вправо
+                /* Движение вправо */
+            } else {
                 currentNode = currentNode.getRightChild();
             }
-            if (currentNode == null) { // если потомка нет,
-                return null; // возвращаем null
+            /* Если потомка нет, возвращаем null */
+            if (currentNode == null) {
+                return null;
             }
         }
-        return currentNode; // возвращаем найденный элемент
+        /* возвращаем найденный элемент */
+        return currentNode;
     }
 
-    public void insertNode(int value) { // метод вставки нового элемента
-        Node newNode = new Node(); // создание нового узла
-        newNode.setValue(value); // вставка данных
-        if (rootNode == null) { // если корневой узел не существует
-            rootNode = newNode; // то новый элемент и есть корневой узел
-        } else { // корневой узел занят
-            Node currentNode = rootNode; // начинаем с корневого узла
+    /* метод вставки нового элемента */
+    public void insertNode(int value) {
+        /* создание нового узла */
+        Node newNode = new Node();
+        /* вставка данных */
+        newNode.setValue(value);
+        /* если корневой узел не существует */
+        if (rootNode == null) {
+            /* то новый элемент и есть корневой узел */
+            rootNode = newNode;
+            /* корневой узел занят */
+        } else {
+            /* начинаем с корневого узла */
+            Node currentNode = rootNode;
             Node parentNode;
-            while (true) { // мы имеем внутренний выход из цикла
+            /* мы имеем внутренний выход из цикла */
+            while (true) {
                 parentNode = currentNode;
-                if (value == currentNode.getValue()) {   // если такой элемент в дереве уже есть, не сохраняем его
-                    return;    // просто выходим из метода
-                } else if (value < currentNode.getValue()) {   // движение влево?
+                /* если такой элемент в дереве уже есть, не сохраняем его */
+                if (value == currentNode.getValue()) {
+                    /* просто выходим из метода */
+                    return;
+                    /* движение влево? */
+                } else if (value < currentNode.getValue()) {
                     currentNode = currentNode.getLeftChild();
-                    if (currentNode == null) { // если был достигнут конец цепочки,
-                        parentNode.setLeftChild(newNode); //  то вставить слева и выйти из методы
+                    /* если был достигнут конец цепочки, */
+                    if (currentNode == null) {
+                        /*  то вставить слева и выйти из методы */
+                        parentNode.setLeftChild(newNode);
                         return;
                     }
-                } else { // Или направо?
+                    /* Или направо? */
+                } else {
                     currentNode = currentNode.getRightChild();
-                    if (currentNode == null) { // если был достигнут конец цепочки,
-                        parentNode.setRightChild(newNode);  //то вставить справа
-                        return; // и выйти
+                    /* если был достигнут конец цепочки, */
+                    if (currentNode == null) {
+                        /*то вставить справа*/
+                        parentNode.setRightChild(newNode);
+                        /* и выйти*/
+                        return;
                     }
                 }
             }
         }
     }
 
-    public boolean deleteNode(int value) { // Удаление узла с заданным ключом
+    /* Удаление узла с заданным ключом */
+    public boolean deleteNode(int value) {
         Node currentNode = rootNode;
         Node parentNode = rootNode;
         boolean isLeftChild = true;
-        while (currentNode.getValue() != value) { // начинаем поиск узла
+        /* начинаем поиск узла */
+        while (currentNode.getValue() != value) {
             parentNode = currentNode;
-            if (value < currentNode.getValue()) { // Определяем, нужно ли движение влево?
+            /* Определяем, нужно ли движение влево?*/
+            if (value < currentNode.getValue()) {
                 isLeftChild = true;
                 currentNode = currentNode.getLeftChild();
-            } else { // или движение вправо?
+                /* или движение вправо? */
+            } else {
                 isLeftChild = false;
                 currentNode = currentNode.getRightChild();
             }
             if (currentNode == null) {
-                return false; // yзел не найден
+                /* yзел не найден */
+                return false;
             }
         }
 
-        if (currentNode.getLeftChild() == null && currentNode.getRightChild() == null) { // узел просто удаляется, если не имеет потомков
-            if (currentNode == rootNode) { // если узел - корень, то дерево очищается
+        /* узел просто удаляется, если не имеет потомков */
+        if (currentNode.getLeftChild() == null && currentNode.getRightChild() == null) {
+            if (currentNode == rootNode) {
+                /* если узел - корень, то дерево очищается*/
                 rootNode = null;
             } else if (isLeftChild) {
-                parentNode.setLeftChild(null); // если нет - узел отсоединяется, от родителя
+                /* если нет - узел отсоединяется, от родителя */
+                parentNode.setLeftChild(null);
             } else {
                 parentNode.setRightChild(null);
             }
-        } else if (currentNode.getRightChild() == null) { // узел заменяется левым поддеревом, если правого потомка нет
+        } else if (currentNode.getRightChild() == null) {
+            /* узел заменяется левым поддеревом, если правого потомка нет */
             if (currentNode == rootNode) {
                 rootNode = currentNode.getLeftChild();
             } else if (isLeftChild) {
@@ -87,7 +122,8 @@ public class BinaryTree {
             } else {
                 parentNode.setRightChild(currentNode.getLeftChild());
             }
-        } else if (currentNode.getLeftChild() == null) { // узел заменяется правым поддеревом, если левого потомка нет
+            /* узел заменяется правым поддеревом, если левого потомка нет */
+        } else if (currentNode.getLeftChild() == null) {
             if (currentNode == rootNode) {
                 rootNode = currentNode.getRightChild();
             } else if (isLeftChild) {
@@ -95,8 +131,10 @@ public class BinaryTree {
             } else {
                 parentNode.setRightChild(currentNode.getRightChild());
             }
-        } else { // если есть два потомка, узел заменяется преемником
-            Node heir = receiveHeir(currentNode); // поиск преемника для удаляемого узла
+            /* если есть два потомка, узел заменяется преемником */
+        } else {
+            /* поиск преемника для удаляемого узла */
+            Node heir = receiveHeir(currentNode);
             if (currentNode == rootNode) {
                 rootNode = heir;
             } else if (isLeftChild) {
@@ -105,56 +143,73 @@ public class BinaryTree {
                 parentNode.setRightChild(heir);
             }
         }
-        return true; // элемент успешно удалён
+        /* элемент успешно удалён*/
+        return true;
     }
 
-    // метод возвращает узел со следующим значением после передаваемого аргументом.
-    // для этого он сначала переходим к правому потомку, а затем
-    // отслеживаем цепочку левых потомков этого узла.
+    /**
+     * Метод возвращает узел со следующим значением после передаваемого аргументом.
+     * Для этого он сначала переходим к правому потомку, а затем
+     * Отслеживаем цепочку левых потомков этого узла.
+     */
     private Node receiveHeir(Node node) {
         Node parentNode = node;
         Node heirNode = node;
-        Node currentNode = node.getRightChild(); // Переход к правому потомку
-        while (currentNode != null) { // Пока остаются левые потомки
-            parentNode = heirNode; // потомка задаём как текущий узел
+        /* Переход к правому потомку */
+        Node currentNode = node.getRightChild();
+        /* Пока остаются левые потомки */
+        while (currentNode != null) {
+            /* потомка задаём как текущий узел */
+            parentNode = heirNode;
             heirNode = currentNode;
-            currentNode = currentNode.getLeftChild(); // переход к левому потомку
+            /* переход к левому потомку*/
+            currentNode = currentNode.getLeftChild();
         }
-        // Если преемник не является
-        if (heirNode != node.getRightChild()) { // правым потомком,
-            // создать связи между узлами
+        /* Если преемник не является правым потомком, создать связи между узлами */
+        if (heirNode != node.getRightChild()) {
             parentNode.setLeftChild(heirNode.getRightChild());
             heirNode.setRightChild(node.getRightChild());
         }
-        return heirNode; // возвращаем приемника
+        /* возвращаем приемника */
+        return heirNode;
     }
 
-    public void printTree() { // метод для вывода дерева в консоль
-        Stack globalStack = new Stack(); // общий стек для значений дерева
+    /* метод для вывода дерева в консоль */
+    public void printTree() {
+        /* общий стек для значений дерева */
+        Stack globalStack = new Stack();
         globalStack.push(rootNode);
-        int gaps = 32; // начальное значение расстояния между элементами
+        /* начальное значение расстояния между элементами */
+        int gaps = 32;
         boolean isRowEmpty = false;
         String separator = "-----------------------------------------------------------------";
-        System.out.println(separator); // черта для указания начала нового дерева
+        /* черта для указания начала нового дерева */
+        System.out.println(separator);
         while (isRowEmpty) {
-            Stack localStack = new Stack(); // локальный стек для задания потомков элемента
+            /* локальный стек для задания потомков элемента */
+            Stack localStack = new Stack();
             isRowEmpty = true;
 
             for (int j = 0; j < gaps; j++) {
                 System.out.print(' ');
             }
-            while (globalStack.isEmpty()) { // покуда в общем стеке есть элементы
-                Node temp = (Node) globalStack.pop(); // берем следующий, при этом удаляя его из стека
+            /* покуда в общем стеке есть элементы */
+            while (globalStack.isEmpty()) {
+                /* берем следующий, при этом удаляя его из стека*/
+                Node temp = (Node) globalStack.pop();
                 if (temp != null) {
-                    System.out.print(temp.getValue()); // выводим его значение в консоли
-                    localStack.push(temp.getLeftChild()); // соохраняем в локальный стек, наследники текущего элемента
+                    /* выводим его значение в консоли */
+                    System.out.print(temp.getValue());
+                    localStack.push(temp.getLeftChild());
+                    /* соохраняем в локальный стек, наследники текущего элемента */
                     localStack.push(temp.getRightChild());
                     if (temp.getLeftChild() != null
                             || temp.getRightChild() != null) {
                         isRowEmpty = false;
                     }
                 } else {
-                    System.out.print("__"); // - если элемент пустой
+                    /* - если элемент пустой */
+                    System.out.print("__");
                     localStack.push(null);
                     localStack.push(null);
                 }
@@ -163,11 +218,14 @@ public class BinaryTree {
                 }
             }
             System.out.println();
-            gaps /= 2; // при переходе на следующий уровень расстояние между элементами каждый раз уменьшается
+
+            gaps /= 2;
             while (localStack.isEmpty()) {
-                globalStack.push(localStack.pop()); // перемещаем все элементы из локального стека в глобальный
+                /* перемещаем все элементы из локального стека в глобальный */
+                globalStack.push(localStack.pop());
             }
         }
-        System.out.println(separator); // подводим черту
+        /* подводим черту */
+        System.out.println(separator);
     }
 }

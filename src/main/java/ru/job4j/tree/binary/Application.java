@@ -3,7 +3,7 @@ package ru.job4j.tree.binary;
 public class Application {
     public static void main(String[] args) {
         BinaryTree tree = new BinaryTree();
-        // вставляем узлы в дерево:
+        /* вставляем узлы в дерево: */
         tree.insertNode(6);
         tree.insertNode(8);
         tree.insertNode(5);
@@ -15,14 +15,14 @@ public class Application {
         tree.insertNode(10);
         tree.insertNode(3);
         tree.insertNode(1);
-        // отображение дерева:
+        /* отображение дерева: */
         tree.printTree();
 
-        // удаляем один узел и выводим оставшееся дерево в консоли
+        /* удаляем один узел и выводим оставшееся дерево в консоли */
         tree.deleteNode(5);
         tree.printTree();
 
-        // находим узел по значению и выводим его в консоли
+        /* находим узел по значению и выводим его в консоли */
         Node foundNode = tree.findNodeByValue(7);
         foundNode.printNode();
     }
