@@ -14,6 +14,14 @@ public class ParseFile {
         this.file = file;
     }
 
+    public synchronized String getAllContextFromParseFile() {
+        return getContent(data -> true);
+    }
+
+    public synchronized String getWithUnicodeContentFromParseFile() {
+        return getContent(data -> data < 0x80);
+    }
+
     private synchronized String getContent(Predicate<Character> filter) {
         try (BufferedInputStream in = new BufferedInputStream(new FileInputStream(file))) {
             StringBuilder output = new StringBuilder();
