@@ -17,6 +17,15 @@
                 </configuration>
             </plugin>
         </plugins>
+        <pluginManagement>
+            <plugins>
+                <plugin>
+                    <groupId>org.apache.maven.plugins</groupId>
+                    <artifactId>maven-surefire-plugin</artifactId>
+                    <version>3.0.0-M7</version>
+                </plugin>
+            </plugins>
+        </pluginManagement>
     </build>
     <artifactId>spring_starter</artifactId>
     <version>1.0</version>
@@ -33,7 +42,7 @@
         <dependency>
             <groupId>org.springframework</groupId>
             <artifactId>spring-core</artifactId>
-            <version>5.3.22</version>
+            <version>5.3.23</version>
         </dependency>
         <dependency>
             <groupId>org.junit.jupiter</groupId>
