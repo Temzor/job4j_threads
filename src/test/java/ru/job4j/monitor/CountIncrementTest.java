@@ -1,4 +1,4 @@
-package ru.ru.job4j.monitor;
+package ru.job4j.monitor;
 
 import org.junit.jupiter.api.Test;
 import ru.job4j.monitor.CountIncrement;

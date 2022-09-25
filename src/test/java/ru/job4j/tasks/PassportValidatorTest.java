@@ -1,4 +1,4 @@
-package tasks;
+package ru.job4j.tasks;
 
 import org.junit.jupiter.api.Test;
 import ru.job4j.tasks.PasswordValidator;
@@ -56,6 +56,6 @@ class PassportValidatorTest {
         IllegalArgumentException exception = assertThrows(
                 IllegalArgumentException.class,
                 () -> PasswordValidator.validate("KASMASDASqwer"));
-        assertThat(exception.getMessage()).isEqualTo("Password don't have digit");
+        assertThat(exception.getMessage()).isEqualTo("Password don't  have upper char");
     }
 }
