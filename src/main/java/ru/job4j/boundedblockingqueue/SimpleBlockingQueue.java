@@ -18,25 +18,21 @@ public class SimpleBlockingQueue<T> {
     }
 
     public synchronized void offer(T value) throws InterruptedException {
-       while (queue.size() == capacity) {
-           try {
-               wait();
-           } catch (InterruptedException e) {
-               throw new RuntimeException(e);
-           }
-       }
-       queue.add(value);
+        while (queue.size() == capacity) {
+
+            wait();
+
+        }
+        queue.add(value);
         System.out.println("Add item;");
-       notifyAll();
+        notifyAll();
     }
 
     public synchronized T poll() throws InterruptedException {
         while (queue.isEmpty()) {
-            try {
-                wait();
-            } catch (InterruptedException e) {
-                throw new RuntimeException(e);
-            }
+
+            wait();
+
         }
         T result = queue.poll();
         System.out.println("Poll item;");
