@@ -19,9 +19,7 @@ public class SimpleBlockingQueue<T> {
 
     public synchronized void offer(T value) throws InterruptedException {
         while (queue.size() == capacity) {
-
             wait();
-
         }
         queue.add(value);
         System.out.println("Add item;");
@@ -30,9 +28,7 @@ public class SimpleBlockingQueue<T> {
 
     public synchronized T poll() throws InterruptedException {
         while (queue.isEmpty()) {
-
             wait();
-
         }
         T result = queue.poll();
         System.out.println("Poll item;");
