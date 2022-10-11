@@ -18,7 +18,11 @@ public class SimpleBlockingQueueTest {
         Thread thread1 = new Thread(
                 () -> {
                     for (int i = 1; i <= 10; i++) {
-                        simpleBlockingQueue.offer(i);
+                        try {
+                            simpleBlockingQueue.offer(i);
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, "Thread first"
 
@@ -26,7 +30,11 @@ public class SimpleBlockingQueueTest {
         Thread thread2 = new Thread(
                 () -> {
                     for (int i = 1; i <= 10; i++) {
-                        expected.add(simpleBlockingQueue.poll());
+                        try {
+                            expected.add(simpleBlockingQueue.poll());
+                        } catch (InterruptedException e) {
+                            throw new RuntimeException(e);
+                        }
                     }
                 }, "Thread second"
         );
