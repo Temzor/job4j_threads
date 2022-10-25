@@ -24,10 +24,4 @@ public class Cache {
     public void delete(Base model) {
         memory.remove(model.getId(), model);
     }
-
-    @Override
-    public String toString() {
-        return String.format("/Cache(memory=%s)/",
-                this.memory);
-    }
 }
