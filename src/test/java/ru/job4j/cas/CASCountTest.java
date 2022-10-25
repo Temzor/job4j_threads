@@ -5,23 +5,6 @@ import org.junit.jupiter.api.Test;
 import static org.assertj.core.api.Assertions.*;
 
 class CASCountTest {
-
-    @Test
-    public void whenJoin() throws InterruptedException {
-        CASCount count = new CASCount();
-        Thread first = new Thread(() -> {
-            count.increment();
-            count.increment();
-            count.increment();
-        });
-        Thread second = new Thread(count::increment);
-        first.start();
-        second.start();
-        first.join();
-        second.join();
-        assertThat(count.get()).isEqualTo(4);
-    }
-
     @Test
     public void whenExecute2ThreadThen2() throws InterruptedException {
         CASCount count = new CASCount();
@@ -51,6 +34,7 @@ class CASCountTest {
         second.start();
         assertThat(count.get()).isEqualTo(3);
     }
+
     @Test
     void whenIncreaseIn2ThreadsWillSumCountsOfThemWithThreadSafe() {
         CASCount casCount = new CASCount();
