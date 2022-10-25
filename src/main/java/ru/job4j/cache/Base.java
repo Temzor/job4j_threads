@@ -25,12 +25,4 @@ public class Base {
     public void setName(String name) {
         this.name = name;
     }
-
-    @Override
-    public String toString() {
-        return String.format("Base(id=%s ,version=%s ,name=%s)",
-                this.id,
-                this.version,
-                this.name);
-    }
 }
