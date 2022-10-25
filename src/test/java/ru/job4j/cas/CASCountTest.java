@@ -2,31 +2,53 @@ package ru.job4j.cas;
 
 import org.junit.jupiter.api.Test;
 
-import java.util.stream.IntStream;
 
 import static org.assertj.core.api.Assertions.*;
 
 class CASCountTest {
-    @Test
-    void whenIncrementAfterGetAndParallelThreadsNotLocked() {
-        var cas = new CASCount();
-        var first = new Thread(
-                () -> IntStream.range(0, 5).forEach(e -> cas.increment())
-        );
 
-        var second = new Thread(
-                () -> IntStream.range(0, 1).forEach(e -> cas.get()));
+    @Test
+    public void whenJoin() throws InterruptedException {
+        CASCount count = new CASCount();
+        Thread first = new Thread(() -> {
+            count.increment();
+            count.increment();
+            count.increment();
+        });
+        Thread second = new Thread(count::increment);
         first.start();
         second.start();
-        assertThat(cas.get()).isEqualTo(0);
-        assertThat(cas.get()).isEqualTo(5);
+        first.join();
+        second.join();
+        assertThat(count.get()).isEqualTo(4);
     }
 
     @Test
-    void whenIncrement() {
-        var cas = new CASCount();
-        cas.increment();
-        cas.increment();
-        assertThat(cas.get()).isEqualTo(2);
+    public void whenNoJoin() {
+        CASCount count = new CASCount();
+        Thread first = new Thread(() -> {
+            count.increment();
+            count.increment();
+            count.increment();
+        });
+        Thread second = new Thread(count::increment);
+        first.start();
+        second.start();
+        assertThat(count.get()).isEqualTo(0);
+    }
+
+    @Test
+    public void whenNoJoinOnSecond() throws InterruptedException {
+        CASCount count = new CASCount();
+        Thread first = new Thread(() -> {
+            count.increment();
+            count.increment();
+            count.increment();
+        });
+        Thread second = new Thread(count::increment);
+        first.start();
+        first.join();
+        second.start();
+        assertThat(count.get()).isEqualTo(3);
     }
 }
